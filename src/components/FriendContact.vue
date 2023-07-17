@@ -1,6 +1,6 @@
 <template>
   <li>
-    <h2>{{ name }} {{ friendIsFavorite ? '(Favorite)' : '' }}</h2>
+    <h2>{{ name }} {{ isFavorite ? '(Favorite)' : '' }}</h2>
     <button @click="toggleFavorite">
       Toggle Favorite
     </button>
@@ -24,6 +24,10 @@
 export default {
   // props: ["name", "phoneNumber", "emailAddress", "isFavorite"],
   props: {
+    id: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -49,7 +53,6 @@ export default {
   data() {
     return {
       detailsAreVisible: false,
-      friendIsFavorite: this.isFavorite,
     };
   },
   methods: {
@@ -57,7 +60,9 @@ export default {
       this.detailsAreVisible = !this.detailsAreVisible;
     },
     toggleFavorite() {
-      this.friendIsFavorite = !this.friendIsFavorite;
+      // this.id (from props) will be passed as a payload and used in the parent's own method toggleFavoriteStatus,
+      // which is called v-on:toggle-favorite and which accepts this payload as an argument. You can pass as many args as you want
+      this.$emit('toggle-favorite', this.id);
     },
   },
 };

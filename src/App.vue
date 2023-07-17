@@ -4,13 +4,16 @@
       <h1>My Friends</h1>
     </header>
     <ul>
+      <!-- @(v-on:)toggle-favorite is waiting for the 'toggle-favorite' event $emit-ted by child -->
       <friend-contact
         v-for="friend in friends"
+        :id="friend.id"
         :key="friend.id"
         :name="friend.name"
         :email-address="friend.email"
         :phone-number="friend.phone"
-        :is-favorite="false"
+        :isFavorite="friend.isFavorite"
+        @toggle-favorite="toggleFavoriteStatus"
       />
     </ul>
   </section>
@@ -26,15 +29,25 @@ export default {
           name: 'Manuel Lorenz',
           phone: '0123 45678 90',
           email: 'manuel@localhost.com',
+          isFavorite: true,
         },
         {
           id: 'julie',
           name: 'Julie Jones',
           phone: '0987 654421 21',
           email: 'julie@localhost.com',
+          isFavorite: false,
         },
       ],
     };
+  },
+  methods: {
+    toggleFavoriteStatus(friendId) {
+      const identifiedFriend = this.friends.find(
+        friend => friend.id === friendId
+      );
+      identifiedFriend.isFavorite = !identifiedFriend.isFavorite;
+    },
   },
 };
 </script>
