@@ -7,6 +7,9 @@
     <button @click="toggleDetails">
       {{ detailsAreVisible ? 'Hide' : 'Show' }} Details
     </button>
+    <button @click="$emit('delete', id)">
+      Delete
+    </button>
     <ul v-if="detailsAreVisible">
       <li>
         <strong>Phone:</strong>
@@ -50,7 +53,7 @@ export default {
       // }
     },
   },
-  emits: ['toggle-favorite'],
+  emits: ['toggle-favorite', 'delete'],
   // emits: {
   //   'toggle-favorite': function(id) {
   //     if (id) {
@@ -74,7 +77,7 @@ export default {
       // this.id (from props) will be passed as a payload and used in the parent's own method toggleFavoriteStatus,
       // which is called v-on:toggle-favorite and which accepts this payload as an argument. You can pass as many args as you want
       this.$emit('toggle-favorite', this.id);
-    },
+    }
   },
 };
 </script>
